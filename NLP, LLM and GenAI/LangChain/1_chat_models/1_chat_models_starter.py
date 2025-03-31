@@ -32,6 +32,7 @@ messages = [
 """ API keys """
 hf_api_key = os.getenv("HF_TOKEN")
 
+
 """ gemma_llm = HuggingFaceHub(
     repo_id="google/gemma-7b",
     model_kwargs={"temperature": 0.7, "max_new_tokens": 300},
