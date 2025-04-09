@@ -4,6 +4,32 @@ import openai
 from PIL import Image
 import io
 
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Karla:ital,wght@0,200..800;1,200..800&family=Raleway:ital,wght@0,100..900;1,100..900&family=Sofia+Sans:ital,wght@0,1..1000;1,1..1000&display=swap');
+
+html, body, [class*="css"] {
+    font-family: "Raleway", sans-serif;
+    font-family: "Karla", sans-serif;
+    font-family: "Archivo", sans-serif;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+.stApp {
+    font-family: "Raleway", sans-serif;
+    font-family: "Karla", sans-serif;
+    font-family: "Archivo", sans-serif;
+    font-family: "Sofia Sans", sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Raleway", sans-serif !important;
+    font-family: "Karla", sans-serif !important;
+    font-family: "Archivo", sans-serif !important;
+    font-family: "Sofia Sans", sans-serif !important;
+}
+</style>
+""", unsafe_allow_html=True)
 
 def create_qa_interface():
     st.title("Multi-Modal AI Question Answering")
