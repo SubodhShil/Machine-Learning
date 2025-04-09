@@ -37,8 +37,9 @@ gemini_llm = ChatGoogleGenerativeAI(
     model="models/gemini-2.0-flash",
 )
 
+
 prompt_template = ChatPromptTemplate([
-    ("System", "You're a facts expertw who knows facts about {animal}"),
+    ("System", "You're a facts expert who knows facts about {animal}"),
     ("Human", "Tell me {fact_cnt} facts about {animal}")
 ])
 
