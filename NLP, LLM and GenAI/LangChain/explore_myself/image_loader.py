@@ -8,6 +8,10 @@ import io
 import os
 import imghdr
 
+# to avoid warnings
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+
 # Load environment variables
 load_dotenv()
 
@@ -20,10 +24,8 @@ def process_image(image_path, prompt="Extract all text from this image"):
     try:
         # Read and encode the image
         with Image.open(image_path) as img:
-            # Determine image format
             img_format = img.format
             if not img_format:
-                # Try to detect format if not available
                 detected_format = imghdr.what(image_path)
                 img_format = detected_format.upper() if detected_format else "JPEG"
             
@@ -69,53 +71,48 @@ def analyze_image(image_path, prompt=None):
     result = process_image(image_path, prompt)
     return result
 
-# Example usage
+
 if __name__ == "__main__":
     from rich.console import Console
     from langchain_core.messages import SystemMessage
     
     console = Console()
     
-    # Set the default image path
+    # Default image path
     default_image_path = "f:/GitHub/Machine Learning/NLP, LLM and GenAI/LangChain/explore_myself/img2.jpg"
     
-    # Initialize chat history
-    chat_history = []
-    
+
     # Initial system message
-    system_message = SystemMessage(content="You're a helpful AI assistant that can analyze images.")
-    chat_history.append(system_message)
-    
+    system_message = SystemMessage(content="You're the best AI image assistant that can analyze any images or any format and generate good response by extracting text.")
+
     console.print("[bold blue]Image Analysis Chatbot[/bold blue]")
-    console.print("[italic]Type 'analyze' to analyze the default image or just chat normally.[/italic]")
-    console.print("[italic]Type 'exit', 'quit', or 'q' to end the conversation.[/italic]\n")
-    
+    console.print("[italic]N.B: Type 'exit', 'quit', or 'q' to end the conversation.[/italic]\n")
+
     while True:
         user_prompt = console.input("[bold red]You 👨🏻‍💻:[/bold red] ")
-        
+
+        # remove leading and trailing spaces
+        user_prompt = user_prompt.strip()
+
         # If user is quitting
         if user_prompt.lower() in ("exit", "quit", "q"):
             console.print("[bold green]Goodbye! 👋[/bold green]")
             break
-        
-        # Check if user wants to analyze an image
-        if user_prompt.lower() == "analyze":
-            # Use the default image path
+
+        # If user provided a prompt that is not empty
+        if user_prompt:
             image_path = default_image_path
-                
-            # Get additional prompt if provided
-            additional_prompt = console.input("[bold blue]What would you like to know about this image? (Press Enter for default): [/bold blue]")
-            
+
             # Analyze the image
-            result = analyze_image(image_path, additional_prompt if additional_prompt.strip() else None)
-            
+            result = analyze_image(image_path, user_prompt)
+
             # Display result
             console.print(f"\n[bold yellow]AI 🤖:[/bold yellow] {result}")
-            
+
+        elif not user_prompt:
+            console.print("[bold red]Error:[/bold red] Please provide a valid prompt or image path.")
         else:
-            # Regular chat interaction
             try:
-                # Get response from LLM
                 response = gemini_llm.invoke(user_prompt)
                 console.print(f"\n[bold yellow]AI 🤖:[/bold yellow] {response.content}")
             except Exception as e:
