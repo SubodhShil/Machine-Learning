@@ -57,6 +57,7 @@ def process_image(image_path, prompt="Extract all text from this image"):
         print(f"Error processing image: {str(e)}")
         return None
 
+
 def analyze_image(image_path, prompt=None):
     """
     Analyze an image with a specific prompt or auto-detect the best prompt
